@@ -13,22 +13,25 @@ public class Lexer {
     }
 
     public Lexeme getLexeme() throws IOException{
-        while(Character.isWhitespace(current)) {
-            current = reader.read();
+        System.out.println("get: " + (char)this.current);
+
+        while(Character.isWhitespace((char)this.current)) {
+            this.current = this.reader.read();
         }
 
-        if(Character.isDigit(current)) {
-            StringBuilder bString = new StringBuilder(current);
+        if(Character.isDigit((char)current)) {
+            StringBuilder bString = new StringBuilder((char)current);
             do {
-                bString.append(current);
-                current = reader.read();
+                bString.append((char)this.current);
+                this.current = this.reader.read();
             }
-            while (Character.isDigit(current));
+            while (Character.isDigit((char)this.current));
             return new Lexeme(bString.toString(), LexemeType.NUM);
         }
 
-        int excurrent = current;
-        current = reader.read();
+        int excurrent = this.current;
+        this.current = this.reader.read();
+        System.out.println("exchar: " + (char)excurrent);
 
         switch(excurrent){
             case '+':
@@ -38,17 +41,18 @@ public class Lexer {
             case '*':
                 return new Lexeme("*", LexemeType.MUL);
             case '/':
+                System.out.println("ret /");
                 return new Lexeme("/", LexemeType.DIV);
             case '(':
                 return new Lexeme("(", LexemeType.OBR);
             case ')':
                 return new Lexeme(")", LexemeType.CBR);
             case '^':
-                return new Lexeme("+", LexemeType.POW);
+                return new Lexeme("^", LexemeType.POW);
             case -1:
-                return new Lexeme("+", LexemeType.EOF);
+                return new Lexeme("-1", LexemeType.EOF);
             default:
-                throw new IOException("illegal symbol: " + current);
+                throw new IOException("error - illegal symbol: " + (char)this.current);
         }
     }
 

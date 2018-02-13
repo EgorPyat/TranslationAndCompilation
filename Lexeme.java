@@ -13,8 +13,8 @@ enum LexemeType{
 }
 
 public class Lexeme {
-    String value;
-    LexemeType type;
+    private String value;
+    private LexemeType type;
 
     public Lexeme(String value, LexemeType type) {
         this.value = value;
