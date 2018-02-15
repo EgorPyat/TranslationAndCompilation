@@ -1,5 +1,3 @@
-package com.company;
-
 import java.io.IOException;
 import java.io.Reader;
 
@@ -13,8 +11,6 @@ public class Lexer {
     }
 
     public Lexeme getLexeme() throws IOException{
-        System.out.println("get: " + (char)this.current);
-
         while(Character.isWhitespace((char)this.current)) {
             this.current = this.reader.read();
         }
@@ -31,7 +27,6 @@ public class Lexer {
 
         int excurrent = this.current;
         this.current = this.reader.read();
-        System.out.println("exchar: " + (char)excurrent);
 
         switch(excurrent){
             case '+':
@@ -41,7 +36,6 @@ public class Lexer {
             case '*':
                 return new Lexeme("*", LexemeType.MUL);
             case '/':
-                System.out.println("ret /");
                 return new Lexeme("/", LexemeType.DIV);
             case '(':
                 return new Lexeme("(", LexemeType.OBR);

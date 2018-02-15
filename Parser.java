@@ -1,5 +1,3 @@
-package com.company;
-
 import java.io.IOException;
 
 public class Parser {
@@ -34,13 +32,11 @@ public class Parser {
         LexemeType type = this.current.getType();
 
         while (type == LexemeType.MUL || type == LexemeType.DIV){
-            System.out.println(type);
             this.current = this.lexer.getLexeme();
             if (type == LexemeType.MUL) {
                 count *= this.parseFactor();
             }
             else if (type == LexemeType.DIV) {
-                System.out.println("div");
                 count /= this.parseFactor();
             }
             type = this.current.getType();
@@ -73,18 +69,15 @@ public class Parser {
         if(type == LexemeType.NUM){
             Lexeme exlexeme = this.current;
             this.current = this.lexer.getLexeme();
-            System.out.println("exlex: " + exlexeme.getValue());
-            System.out.println("culex: " + this.current.getValue());
             return new Integer(exlexeme.getValue());
         }
         else if(type == LexemeType.OBR){
-            System.out.println("Open bracket");
             this.current = this.lexer.getLexeme();
             int count = this.parseExpression();
             if(this.current.getType() != LexemeType.CBR){
                 throw new IOException("error - close bracket was expected");
             }
-            System.out.println(count);
+            this.current = this.lexer.getLexeme();
             return count;
         }
         else{
